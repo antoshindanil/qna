@@ -1,0 +1,41 @@
+require: 
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  Include:
+    - 'app/**/*.rb'
+    - 'config/**/*.rb'
+    - 'lib/**/*.rb'
+    - "lib/**/*.rake"
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/**/*'
+    - 'bin/*'
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+Style/Documentation:
+  Enabled: false
+Style/AsciiComments:
+  Enabled: false
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/BlockDelimiters:
+  BracesRequiredMethods: ['expect']
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'feature']
+Bundler/OrderedGems:
+  Enabled: false
