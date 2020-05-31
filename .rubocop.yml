@@ -9,7 +9,8 @@ AllCops:
     - 'app/**/*.rb'
     - 'config/**/*.rb'
     - 'lib/**/*.rb'
-    - "lib/**/*.rake"
+    - 'lib/**/*.rake'
+    - 'spec/**/*.rb'
   Exclude:
     - 'vendor/**/*'
     - 'db/**/*'
