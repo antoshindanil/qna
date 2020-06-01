@@ -3,20 +3,19 @@
 require "rails_helper"
 
 RSpec.describe AnswersController, type: :controller do
-  let!(:answer) { create(:answer) }
-  let(:question) { answer.question }
-
   describe "POST #create" do
+    let(:question) { create(:question) }
+
     context "with valid attributes" do
       it "saves a new answer in the database" do
         expect {
           post :create, params: {question_id: question, answer: attributes_for(:answer)}
-        }.to change(Answer, :count).by(1)
+        }.to change(question.answers, :count).by(1)
       end
 
       it "redirects to question show view" do
         post :create, params: {question_id: question, answer: attributes_for(:answer)}
-        expect(response).to redirect_to question_path(:question)
+        expect(response).to redirect_to assigns(:exposed_question)
       end
     end
 
@@ -24,7 +23,7 @@ RSpec.describe AnswersController, type: :controller do
       it "does not save the answer" do
         expect {
           post :create, params: {question_id: question, answer: attributes_for(:answer, :invalid)}
-        }.not_to change(Answer, :count)
+        }.not_to change(question.answers, :count)
       end
 
       it "re-render new view" do

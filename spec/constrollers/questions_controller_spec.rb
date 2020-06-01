@@ -3,8 +3,6 @@
 require "rails_helper"
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
-
   describe "POST #create" do
     context "with valid attributes" do
       it "saves a new question in the database" do
@@ -15,7 +13,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it "redirects to show view" do
         post :create, params: {question: attributes_for(:question)}
-        expect(response).to redirect_to question_path(:question)
+        expect(response).to redirect_to assigns(:exposed_question)
       end
     end
 
@@ -34,6 +32,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe "PATCH #update" do
+    let(:question) { create(:question) }
+
     context "with valid attributes" do
       it "assigns requested question to @question" do
         patch :update, params: {id: question, question: attributes_for(:question)}
@@ -50,7 +50,7 @@ RSpec.describe QuestionsController, type: :controller do
 
       it "redirects to updated question" do
         patch :update, params: {id: question, question: attributes_for(:question)}
-        expect(response).to redirect_to question_path(:question)
+        expect(response).to redirect_to assigns(:exposed_question)
       end
     end
 
