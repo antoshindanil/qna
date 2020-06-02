@@ -22,8 +22,6 @@ Style/Documentation:
   Enabled: false
 Style/AsciiComments:
   Enabled: false
-Style/TrailingCommaInHashLiteral:
-  EnforcedStyleForMultiline: consistent_comma
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 Style/ClassAndModuleChildren:
@@ -31,8 +29,6 @@ Style/ClassAndModuleChildren:
 Style/BlockDelimiters:
   BracesRequiredMethods: ['expect']
 
-Layout/SpaceInsideHashLiteralBraces:
-  EnforcedStyle: no_space
 Layout/FirstArrayElementIndentation:
   EnforcedStyle: consistent
 
@@ -40,3 +36,11 @@ Metrics/BlockLength:
   ExcludedMethods: ['describe', 'feature']
 Bundler/OrderedGems:
   Enabled: false
+
+Capybara/FeatureMethods:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Max: 10
+RSpec/MultipleExpectations:
+  Max: 5
