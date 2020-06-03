@@ -1,9 +1,14 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  sequence :body do |n|
+    "Body #{n}"
+  end
+
   factory :answer do
+    body
     question
-    body { "Answer text" }
+    association :author, factory: :user
 
     trait :invalid do
       body { nil }

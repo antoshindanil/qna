@@ -1,8 +1,7 @@
-h1 = question.title
-p = question.body
+= render question
 
-= render "answers/answers", answers: question.answers
+= render "answers/answer", answers: question.answers
 
 hr
 
-= render "answers/form", q: question, a: answer
+= render "answers/form", answers: answer, question: question
