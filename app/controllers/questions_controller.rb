@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
   expose :questions, -> { Question.all }
   expose :question
   expose :answer, -> { question.answers.new }
-  before_action :authenticate_user!, except: %i[index show]
 
   def create
     @exposed_question = current_user.questions.new(question_params)
@@ -27,9 +27,9 @@ class QuestionsController < ApplicationController
   def destroy
     if current_user.author_of?(question)
       question.destroy
-      redirect_to questions_path, notice: "Question was successfully deleted"
+      redirect_to question, notice: "Question was successfully deleted"
     else
-      redirect_to questions_path, notice: "Can't delete the question"
+      redirect_to question, notice: "Can't delete the question"
     end
   end
 

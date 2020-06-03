@@ -1,4 +1,4 @@
-- answers.each do |answer|
+- if answer.persisted?
   div id="answer-#{answer.id}"
     = answer.body
     div

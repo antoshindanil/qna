@@ -3,4 +3,4 @@ p= question.body
 
 - if current_user&.author_of?(question)
       div
-        = link_to 'Delete question', question_path(question), method: :delete, data: { confirm: 'Are you sure?' }
+        = link_to "Delete question", question_path(question), method: :delete, data: { confirm: "Are you sure?" }
