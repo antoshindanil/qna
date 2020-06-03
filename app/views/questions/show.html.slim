@@ -1,5 +1,8 @@
-h1= question.title
-p= question.body
+h1 = question.title
+p = question.body
 
-- question.answers.each do |answer|
-  p= answer.body
+= render "answers/answers", answers: question.answers
+
+hr
+
+= render "answers/form", q: question, a: answer

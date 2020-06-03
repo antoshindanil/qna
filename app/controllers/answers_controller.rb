@@ -3,12 +3,13 @@
 class AnswersController < ApplicationController
   expose :question, id: :question_id
   expose :answer, parent: :question
+  before_action :authenticate_user!
 
   def create
     if answer.save
-      redirect_to question
+      redirect_to question, notice: "Your answer was successfully created."
     else
-      render :new
+      render "questions/show"
     end
   end
 

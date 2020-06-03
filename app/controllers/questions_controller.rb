@@ -3,7 +3,8 @@
 class QuestionsController < ApplicationController
   expose :questions, -> { Question.all }
   expose :question
-  before_action :authenticate_user!, except: [:index, :show]
+  expose :answer, -> { question.answers.new }
+  before_action :authenticate_user!, except: %i[index show]
 
   def create
     if question.save
