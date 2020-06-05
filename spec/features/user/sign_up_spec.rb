@@ -3,9 +3,7 @@
 require "rails_helper"
 
 feature "User can sign up" do
-
   scenario "User tries to sign up with valid attributes" do
-
     visit new_user_registration_path
     fill_in "Email", with: "user@test.com"
     fill_in "Password", with: "12345678"
@@ -16,7 +14,6 @@ feature "User can sign up" do
   end
 
   scenario "User tries to sign up with invalid password confirmation" do
-
     visit new_user_registration_path
     fill_in "Email", with: "user@test.com"
     fill_in "Password", with: "12345678"
@@ -27,7 +24,6 @@ feature "User can sign up" do
   end
 
   scenario "User tries to sign up with invalid password length" do
-
     visit new_user_registration_path
     fill_in "Email", with: "user@test.com"
     fill_in "Password", with: "1234"

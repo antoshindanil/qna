@@ -3,11 +3,11 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
-  it { is_expected.to validate_presence_of :email }
-  it { is_expected.to validate_presence_of :password }
+  it { should validate_presence_of :email }
+  it { should validate_presence_of :password }
 
-  it { is_expected.to have_many(:questions).dependent(:destroy) }
-  it { is_expected.to have_many(:answers).dependent(:destroy) }
+  it { should have_many(:questions).dependent(:destroy) }
+  it { should have_many(:answers).dependent(:destroy) }
 
   describe "user is author?" do
     let(:user) { create(:user) }
