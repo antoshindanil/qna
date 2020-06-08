@@ -11,33 +11,33 @@ RSpec.describe AnswersController, type: :controller do
 
     context "with valid answer" do
       it "saves a new answer in the database" do
-        expect { post :create, params: { answer: attributes_for(:answer), question_id: question } }
+        expect { post :create, params: { answer: attributes_for(:answer), question_id: question, format: :js } }
           .to change(question.answers, :count).by(1)
       end
 
       it "answer belongs to the author" do
-        post :create, params: { answer: attributes_for(:answer), question_id: question }
+        post :create, params: { answer: attributes_for(:answer), question_id: question, format: :js }
 
         expect(user).to be_author_of(assigns(:exposed_answer))
       end
 
       it "redirects to question show view" do
-        post :create, params: { answer: attributes_for(:answer), question_id: question }
+        post :create, params: { answer: attributes_for(:answer), question_id: question, format: :js }
 
-        expect(response).to redirect_to question_path(assigns(:exposed_question))
+        expect(response).to render_template :create
       end
     end
 
     context "with invalid answer" do
       it "does not save the answer" do
-        expect { post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question } }
+        expect { post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question, format: :js } }
           .not_to change(Answer, :count)
       end
 
-      it "re-renders questions show view" do
-        post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question }
+      it "re-renders questions create view" do
+        post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question, format: :js }
 
-        expect(response).to render_template "questions/show"
+        expect(response).to render_template :create
       end
     end
   end
@@ -72,6 +72,38 @@ RSpec.describe AnswersController, type: :controller do
         delete :destroy, params: { id: answer }
 
         expect(response).to redirect_to question_path(question)
+      end
+    end
+  end
+
+  describe "PATCH #update" do
+    let!(:answer) { create(:answer, question: question) }
+
+    before { login(answer.author) }
+
+    context "with valid attributes" do
+      it "changes answer attributes" do
+        patch :update, params: { id: answer, answer: { body: "new body" } }, format: :js
+        answer.reload
+        expect(answer.body).to eq "new body"
+      end
+
+      it "renders update view" do
+        patch :update, params: { id: answer, answer: { body: "new body" } }, format: :js
+        expect(response).to render_template :update
+      end
+    end
+
+    context "with invalid attributes" do
+      it "does not change answer attributes" do
+        expect {
+          patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+        }.not_to change(answer, :body)
+      end
+
+      it "renders update view" do
+        patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+        expect(response).to render_template :update
       end
     end
   end

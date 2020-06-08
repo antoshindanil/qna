@@ -1,6 +1,14 @@
 - if answer.persisted?
   div id="answer-#{answer.id}"
     = answer.body
-    div
-      - if current_user&.author_of?(answer)
-        = link_to "Delete", answer_path(answer), method: :delete, data: { confirm: "Are you sure?" }
+
+    - if current_user&.author_of?(answer)
+      = link_to 'Edit', '#', class: 'edit-answer-link', data: {answer_id: answer.id}
+      = link_to "Delete", answer_path(answer), method: :delete, data: {confirm: "Are you sure?"}
+
+      div id="answer-#{answer.id}-errors"
+        = render 'shared/errors', resource: answer
+      = form_with model: answer, class: 'hidden', id: "edit-answer-#{answer.id}" do |f|
+        = f.label :body, 'Answer'
+        = f.text_area :body
+        = f.submit 'Save'
