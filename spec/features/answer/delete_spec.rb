@@ -12,14 +12,14 @@ feature "Only an answer's author can delete it" do
   describe "Authenticated user" do
     before { sign_in(user1) }
 
-    scenario "can delete his answer" do
+    scenario "can delete his answer", js: true do
       visit question_path(question)
 
       within("div#answer-#{answer1.id}") do
         click_on "Delete"
+        page.driver.browser.switch_to.alert.accept
       end
 
-      expect(page).to have_content "Answer was successfully deleted"
       expect(page).not_to have_content answer1.body
     end
 
