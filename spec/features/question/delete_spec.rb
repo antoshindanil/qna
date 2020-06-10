@@ -15,8 +15,7 @@ feature "An author of the question can delete the own question" do
 
     scenario "can delete the own question" do
       visit question_path(question1)
-
-      click_on "Delete question"
+      click_on "Delete"
 
       expect(page).to have_content "Question was successfully deleted"
     end

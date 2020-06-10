@@ -30,8 +30,9 @@ RSpec.describe AnswersController, type: :controller do
 
     context "with invalid answer" do
       it "does not save the answer" do
-        expect { post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question, format: :js } }
-          .not_to change(Answer, :count)
+        expect {
+          post :create, params: { answer: attributes_for(:answer, :invalid), question_id: question, format: :js }
+        }.not_to change(Answer, :count)
       end
 
       it "re-renders questions create view" do
@@ -104,6 +105,43 @@ RSpec.describe AnswersController, type: :controller do
       it "renders update view" do
         patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
         expect(response).to render_template :update
+      end
+    end
+  end
+
+  describe "PATCH #best" do
+    let!(:question) { create(:question, author: user) }
+    let!(:answer) { create(:answer, question: question) }
+
+    context "when the author of the question set best the answer" do
+      before { login(question.author) }
+
+      it "set answer as the best" do
+        patch :best, params: { id: answer }, format: :js
+        answer.reload
+
+        expect(answer).to be_best
+      end
+
+      it "renders best view" do
+        patch :best, params: { id: answer }, format: :js
+        expect(response).to render_template :best
+      end
+    end
+
+    context "when a non-author of the question" do
+      let(:user1) { create(:user) }
+
+      before { login(user1) }
+
+      it "cannot set the answer as the best" do
+        patch :best, params: { id: answer }, format: :js
+        expect(answer).not_to be_best
+      end
+
+      it "renders best view" do
+        patch :best, params: { id: answer }, format: :js
+        expect(response).to render_template :best
       end
     end
   end
