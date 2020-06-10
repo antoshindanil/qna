@@ -49,3 +49,5 @@ RSpec/ImplicitExpect:
 
 Rails/LexicallyScopedActionFilter:
   Enabled: false
+Rails/InverseOf:
+  Enabled: false
