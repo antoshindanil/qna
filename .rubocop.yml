@@ -51,3 +51,5 @@ Rails/LexicallyScopedActionFilter:
   Enabled: false
 Rails/InverseOf:
   Enabled: false
+Rails/FilePath:
+  Enabled: false
