@@ -6,6 +6,10 @@ RSpec.describe Answer, type: :model do
   it { should belong_to(:question) }
   it { should validate_presence_of :body }
 
+  it "have many attached files" do
+    expect(described_class.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
+  end
+
   describe "best answer validation if the answer is choosen as the best" do
     # rubocop:disable RSpec/LetSetup
     let!(:answer) { create(:answer, best: true) }
