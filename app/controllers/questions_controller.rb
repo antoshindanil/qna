@@ -6,6 +6,17 @@ class QuestionsController < ApplicationController
   expose :question, scope: -> { Question.with_attached_files }
   expose :answer, -> { question.answers.new }
 
+  def new
+    @exposed_question = Question.new
+    question.links.build
+  end
+
+  def show
+    question
+    @exposed_answer = Answer.new
+    answer.links.build
+  end
+
   def create
     @exposed_question = current_user.questions.new(question_params)
 
@@ -32,6 +43,6 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [])
+    params.require(:question).permit(:title, :body, files: [], links_attributes: %i[name url])
   end
 end
