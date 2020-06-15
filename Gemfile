@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.2', require: false
 # Slil for View
 gem 'slim-rails'
-# A helper for creating declarative interfaces in controllers 
+# A helper for creating declarative interfaces in controllers
 gem 'decent_exposure', '3.0.2'
 # Gem for authentication
 gem 'devise'
@@ -37,6 +37,8 @@ gem 'devise'
 gem 'aws-sdk-s3'
 # Nested forms
 gem "cocoon"
+# Validating url
+gem 'validate_url'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

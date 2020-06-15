@@ -1,5 +1,6 @@
 <% if answer.errors.blank? %>
   $('#answer-<%= answer.id %>').html('<%= j render answer %>');
+  window.GistEmbed.init()
 <% else %>
   $('#answer-<%= answer.id %>-errors').html('<%= render 'shared/errors', resource: answer %>');
 <% end %>

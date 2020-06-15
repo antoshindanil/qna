@@ -15,7 +15,12 @@ div id="answer-#{answer.id}"
     p Links:
     ul
       - answer.links.each do |link|
-        li= link_to link.name, link.url
+        - if link.gist?
+          li
+            = link_to link.name, link.url
+            = content_tag :p, link.name, data: {gist_id: link.gist_id, gist_line: "1-10", gist_hide_footer: "true"}
+        - else
+          li = link_to link.name, link.url
 
   - if current_user&.author_of?(answer.question) && !answer.best?
     = link_to "Best", best_answer_path(answer), method: :patch, remote: true
@@ -33,12 +38,12 @@ div id="answer-#{answer.id}"
       = f.label :files
       = f.file_field :files, multiple: true, direct_upload: true
 
-      p Links
+      p Links:
       #links
-      = f.fields_for :links do |link|
-        = render 'links/link_fields', f: link
-      .links
-        = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+        = f.fields_for :links do |link|
+          = render 'links/link_fields', f: link
+        .links
+          = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
 
       = f.submit 'Save'
 
