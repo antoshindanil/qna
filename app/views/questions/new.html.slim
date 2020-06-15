@@ -10,6 +10,13 @@
   = f.label :files
   = f.file_field :files, multiple: true, direct_upload: true
 
+  = f.fields_for :award do |a|
+    = a.label :name, "Award name"
+    = a.text_field :name
+
+    = a.label :image
+    = a.file_field :image
+
   p Links
   #links
   = f.fields_for :links do |link|
