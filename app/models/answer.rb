@@ -16,8 +16,8 @@ class Answer < ApplicationRecord
 
   def set_best
     transaction do
-      question.answers.best&.update(best: false)
-      question.award&.update(user_id: user_id)
+      question.answers.best&.update!(best: false)
+      question.award&.update!(user_id: user_id)
       update!(best: true)
     end
   end
