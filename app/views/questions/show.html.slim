@@ -1,7 +1,11 @@
-= render question
+.questions
+  = render question
+
+.question-links
+  = render question.links
+
 .answers
   = render question.answers
 
 hr
-
 = render "answers/form"

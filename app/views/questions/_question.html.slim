@@ -1,5 +1,5 @@
 .div id="question-#{question.id}"
-  h3 = link_to question.title, question_path(question)
+  = link_to question.title, question_path(question), class: "is-size-2"
   p = question.body
 
   - if question.files.attached?
@@ -8,6 +8,9 @@
         p = link_to file.filename.to_s, url_for(file)
         - if current_user&.author_of?(question)
           p= link_to "Delete file", attachment_path(file), method: :delete, remote: true
+
+  - if question.award
+    = render question.award
 
   - if current_user&.author_of?(question)
     = link_to "Edit", "#", class: "edit-question-link", data: {question_id: question.id}
@@ -18,8 +21,25 @@
     = form_with model: question, class: 'hidden', id: "edit-question-#{question.id}" do |f|
       = f.label :title
       = f.text_field :title
+
       = f.label :body
       = f.text_area :body
+
       = f.label :files
       = f.file_field :files, multiple: true, direct_upload: true
-      = f.submit "Save"
+
+      = f.fields_for :award   do |a|
+        = a.label :name, "Award name"
+        = a.text_field :name
+
+        = a.label :image
+        = a.file_field :image, direct_upload: true
+
+      p Links:
+      #links
+        = f.fields_for :links do |link|
+          = render 'links/link_fields', f: link
+        .links
+          = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+
+      = f.submit 'Save'

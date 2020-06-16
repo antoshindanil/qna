@@ -1,5 +1,7 @@
 <% if question.errors.blank? %>
   $('#question-<%= question.id %>').html('<%= j render question %>');
+  $('.question-links').html('<%= j render question.links %>');
+  window.GistEmbed.init()
 <% else %>
   $('#question-<%= question.id %>-errors').html('<%= render 'shared/errors', resource: question %>');
 <% end %>

@@ -5,6 +5,9 @@ require "rails_helper"
 RSpec.describe Answer, type: :model do
   it { should belong_to(:question) }
   it { should validate_presence_of :body }
+  it { should have_many(:links).dependent(:destroy) }
+
+  it { should accept_nested_attributes_for :links }
 
   it "have many attached files" do
     expect(described_class.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
@@ -41,6 +44,7 @@ RSpec.describe Answer, type: :model do
     let!(:answer1) { create(:answer, best: true, question: question) }
     let!(:answer2) { create(:answer, best: false, question: question) }
     let!(:answer3) { create(:answer, best: false, question: question) }
+    let!(:award) { create(:award, question: question) }
 
     before do
       answer2.set_best
@@ -51,6 +55,10 @@ RSpec.describe Answer, type: :model do
 
     it "set best answer" do
       expect(answer2).to be_best
+    end
+
+    it "assign an award answer author" do
+      expect(award.user).to eq answer2.author
     end
 
     it "does not set best answer to others answers" do

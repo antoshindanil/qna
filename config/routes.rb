@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   end
 
   resources :attachment, only: :destroy
+  resources :awards, only: :index
 end

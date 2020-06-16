@@ -1,0 +1,7 @@
+h2 Awards
+
+= awards.each do |award|
+  p= award.question.title
+  - if award.image.attached?
+    p= image_tag url_for(award.image)
+  p= award.name

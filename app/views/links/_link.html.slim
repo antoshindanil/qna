@@ -1,0 +1,6 @@
+div id="link-#{link.id}"
+  - if link.gist?
+    = content_tag :div, link.name, data: {gist_id: link.gist_id, gist_line: "1-10"}
+    = link_to "See more", link.url
+  - else
+    = link_to link.name, link.url

@@ -118,4 +118,43 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe "GET #show" do
+    before { get :show, params: { id: question } }
+
+    it "assigns the requested question to @question" do
+      expect(assigns(:exposed_question)).to eq question
+    end
+
+    it "assigns new answer for question" do
+      expect(assigns(:exposed_answer)).to be_a_new(Answer)
+    end
+
+    it "assigns new link for answer" do
+      expect(assigns(:exposed_answer).links.first).to be_a_new(Link)
+    end
+
+    it "renders show view" do
+      expect(response).to render_template :show
+    end
+  end
+
+  describe "GET #new" do
+    before do
+      login(user)
+      get :new
+    end
+
+    it "assigns a new Question to @question" do
+      expect(assigns(:exposed_question)).to be_a_new(Question)
+    end
+
+    it "assigns a new link to @question" do
+      expect(assigns(:exposed_question).links.first).to be_a_new(Link)
+    end
+
+    it "renders new view" do
+      expect(response).to render_template :new
+    end
+  end
 end

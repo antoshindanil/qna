@@ -3,8 +3,25 @@
 = form_with model: question, local: true do |f|
   = f.label :title
   = f.text_field :title
+
   = f.label :body
   = f.text_area :body
+
   = f.label :files
   = f.file_field :files, multiple: true, direct_upload: true
+
+  = f.fields_for :award do |a|
+    = a.label :name, "Award name"
+    = a.text_field :name
+
+    = a.label :image
+    = a.file_field :image, direct_upload: true
+
+  p Links
+  #links
+  = f.fields_for :links do |link|
+    = render "links/link_fields", f: link
+  .links
+    = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+
   = f.submit "Ask"
