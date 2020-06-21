@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Answer < ApplicationRecord
+  include Votable
+
   belongs_to :question
   belongs_to :author, class_name: "User", foreign_key: :user_id
   has_many :links, dependent: :destroy, as: :linkable
@@ -16,7 +18,7 @@ class Answer < ApplicationRecord
 
   def set_best
     transaction do
-      question.answers.best&.update!(best: false)
+      Answer.best&.update(best: false)
       question.award&.update!(user_id: user_id)
       update!(best: true)
     end

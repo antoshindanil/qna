@@ -4,6 +4,9 @@ div id="answer-#{answer.id}"
   - if answer.best?
     p Best answer!
 
+  p = "Rating:"
+  p.rating = answer.rating
+
   - if answer.files.attached?
     - answer.files.each do |file|
       div id="file-#{file.id}"
@@ -11,16 +14,17 @@ div id="answer-#{answer.id}"
         - if current_user&.author_of?(answer)
           p= link_to "Delete file", attachment_path(file), method: :delete, remote: true
 
-  .links
-    p Links:
-    ul
-      - answer.links.each do |link|
-        - if link.gist?
-          li
-            = link_to link.name, link.url
-            = content_tag :p, link.name, data: {gist_id: link.gist_id, gist_line: "1-10", gist_hide_footer: "true"}
-        - else
-          li = link_to link.name, link.url
+  - if answer.links.exists?
+    .links
+      p Links:
+      ul
+        - answer.links.each do |link|
+          - if link.gist?
+            li
+              = link_to link.name, link.url
+              = content_tag :p, link.name, data: {gist_id: link.gist_id, gist_line: "1-10", gist_hide_footer: "true"}
+          - else
+            li = link_to link.name, link.url
 
   - if current_user&.author_of?(answer.question) && !answer.best?
     = link_to "Best", best_answer_path(answer), method: :patch, remote: true
@@ -47,3 +51,7 @@ div id="answer-#{answer.id}"
 
       = f.submit 'Save'
 
+  - if current_user && !current_user.author_of?(answer)
+    = link_to('Down!', down_answer_path(answer), method: :post, remote: true, class: "down-answer-link #{current_user&.voted?(answer) ? 'hidden' : ''}")
+    = link_to('Up!', up_answer_path(answer), method: :post, remote: true, class: "up-answer-link #{current_user&.voted?(answer) ? 'hidden' : ''}")
+    = link_to('Cancel vote', cancel_vote_answer_path(answer), method: :post, remote: true, class: "cancel-vote-answer-link #{current_user&.voted?(answer) ? '' : 'hidden'}")

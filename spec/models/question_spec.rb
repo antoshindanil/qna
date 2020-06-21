@@ -3,9 +3,15 @@
 require "rails_helper"
 
 RSpec.describe Question, type: :model do
+  let(:user) { create(:user) }
+  let(:question) { create(:question) }
+
+  it_behaves_like "votable"
+
   it { should have_many(:answers).order("best DESC, created_at").dependent(:destroy) }
   it { should have_many(:links).dependent(:destroy) }
   it { should have_one(:award).dependent(:destroy) }
+  it { should have_many(:votes).dependent(:delete_all) }
 
   it { should validate_presence_of :title }
   it { should validate_presence_of :body }

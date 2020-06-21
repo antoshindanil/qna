@@ -2,8 +2,11 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+
   expose :question, id: :question_id
   expose :answer, scope: -> { Answer.with_attached_files }
+
+  include Voted
 
   def create
     @exposed_answer = question.answers.new(answer_params)
