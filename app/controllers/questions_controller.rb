@@ -6,6 +6,8 @@ class QuestionsController < ApplicationController
   expose :question, scope: -> { Question.with_attached_files }
   expose :answer, -> { question.answers.new }
 
+  include Voted
+
   def new
     @exposed_question = Question.new
     question.links.build

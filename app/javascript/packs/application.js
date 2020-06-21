@@ -16,6 +16,7 @@ require("utilities/embeded_gist")
 require("utilities/edit_question")
 require("utilities/edit_answer")
 require("utilities/vote_answer")
+require("utilities/vote_question")
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)

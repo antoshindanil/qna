@@ -1,5 +1,13 @@
 .questions
   = render question
+  #question-vote
+    p = "Rating:"
+    p.rating = question.rating
+
+    - if current_user && !current_user.author_of?(question)
+      = link_to('Down!', down_question_path(question), method: :post, remote: true, class: "down-question-link #{current_user&.voted?(question) ? 'hidden' : ''}")
+      = link_to('Up!', up_question_path(question), method: :post, remote: true, class: "up-question-link #{current_user&.voted?(question) ? 'hidden' : ''}")
+      = link_to('Cancel vote', cancel_vote_question_path(question), method: :post, remote: true, class: "cancel-vote-question-link #{current_user&.voted?(question) ? '' : 'hidden'}")
 
 .question-links
   = render question.links

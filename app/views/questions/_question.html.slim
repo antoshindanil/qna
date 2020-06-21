@@ -35,11 +35,12 @@
         = a.label :image
         = a.file_field :image, direct_upload: true
 
-      p Links:
-      #links
-        = f.fields_for :links do |link|
-          = render 'links/link_fields', f: link
-        .links
-          = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
+      - if question.links.exists?
+        p Links:
+        #links
+          = f.fields_for :links do |link|
+            = render 'links/link_fields', f: link
+          .links
+            = link_to_add_association 'add link', f, :links, partial: 'links/link_fields'
 
       = f.submit 'Save'

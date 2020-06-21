@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions do
+  resources :questions, concerns: :votable do
     resources :answers, shallow: true, concerns: :votable do
       patch "best", on: :member
     end
